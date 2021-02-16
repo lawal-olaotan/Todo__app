@@ -1,0 +1,285 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.navbar {
+  position: relative;
+  padding: .4rem 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 10vh;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #FDFDFD;
+  -webkit-box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (min-width: 320px) {
+  .navbar {
+    padding: 1rem;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .navbar {
+    padding: .4rem 2rem;
+  }
+}
+
+.navbar .lni {
+  display: none;
+  font-size: 32px;
+}
+
+@media screen and (min-width: 320px) {
+  .navbar .lni {
+    display: block;
+    color: #FF4141;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .navbar .lni {
+    display: none;
+  }
+}
+
+.navbar__logo {
+  width: 25%;
+}
+
+@media screen and (min-width: 320px) {
+  .navbar__logo {
+    width: 65%;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .navbar__logo {
+    width: 50%;
+  }
+}
+
+.navbar__logo__text {
+  font-size: 1.6rem;
+  color: #FF4141;
+}
+
+@media screen and (min-width: 320px) {
+  .navbar__logo__text {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .navbar__logo__text {
+    font-size: 1.4rem;
+  }
+}
+
+.navbar__links {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0;
+  width: 50%;
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  position: relative;
+}
+
+@media screen and (min-width: 320px) {
+  .navbar__links {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 4%;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    z-index: 2;
+    display: none;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .navbar__links {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    position: relative;
+    width: 50%;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    background: transparent;
+    padding: 0;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
+
+@media screen and (min-width: 320px) {
+  .navbar__links__closemenu {
+    position: absolute;
+    top: 4pc;
+    right: 2pc;
+  }
+  .navbar__links__closemenu .lni {
+    color: #FDFDFD;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .navbar__links__closemenu {
+    display: none;
+  }
+}
+
+.navbar__link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  padding: 1rem 1.2rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navbar__link__popup {
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 24px;
+  height: 24px;
+  background: #FF4141;
+  color: #FFF;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 100%;
+  position: absolute;
+  top: 8px;
+  left: 0pc;
+}
+
+@media screen and (min-width: 320px) {
+  .navbar__link__popup {
+    position: unset;
+    top: 0px;
+    width: 38px;
+    margin-right: .5rem;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .navbar__link__popup {
+    position: absolute;
+    margin-right: 0;
+    top: 8px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    width: 24px;
+    -o-border-radius: 100%;
+  }
+}
+
+.navbar__link__text {
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #000;
+}
+
+@media screen and (min-width: 320px) {
+  .navbar__link__text {
+    color: #FDFDFD;
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .navbar__link__text {
+    color: #000;
+    font-size: 1rem;
+  }
+}
+
+.navbar__link:hover {
+  background-color: #ff41416b;
+}
+
+.navbar__link:hover .navbar__link__text {
+  color: #000;
+}
+
+.active .navbar__link__text {
+  color: #FF4141;
+}
+
+@media screen and (min-width: 320px) {
+  .active .navbar__link__text {
+    color: #FFF;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .active .navbar__link__text {
+    color: #FF4141;
+  }
+}
+
+.active .navbar__link__popup {
+  display: none;
+}
+
+.navbar_active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=style.css.map */
