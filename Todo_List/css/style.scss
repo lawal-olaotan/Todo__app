@@ -26,6 +26,10 @@
                     height: fit-content;
                 }
                 @include tablet {
+                    padding: 1rem;
+                    height: fit-content;
+                }
+                @include laptop {
                     padding: .4rem 2rem;
                 }
                 .lni {
@@ -36,6 +40,10 @@
                         color: #FF4141;
                     }
                     @include tablet {
+                        display: block;
+                        color: #FF4141;
+                    }
+                    @include laptop {
                         display: none;
                     }
                 }
@@ -54,7 +62,7 @@
                             font-size: 1.4rem;
                         }
                         @include tablet {
-                            font-size: 1.4rem;
+                            font-size: 1.6rem;
                         }
                     }
                 }
@@ -80,8 +88,8 @@
                         z-index: 2;
                         display: none;
                     }
-                    @include tablet {
-                        display: flex !important;
+                    @include laptop {
+                        display: flex;
                         position: relative;
                         width: 50%;
                         flex-direction: row;
@@ -99,7 +107,7 @@
                                 color: #FDFDFD;
                             }
                         }
-                        @include tablet {
+                        @include laptop {
                             display: none;
                         }
                     }
@@ -134,7 +142,7 @@
                             -ms-border-radius: 15px;
                             -o-border-radius: 15px;
                         }
-                        @include tablet {
+                        @include laptop {
                             position: absolute;
                             margin-right: 0;
                             top: 8px;
@@ -155,7 +163,7 @@
                             color: #FDFDFD;
                             font-size: 1.4rem;
                         }
-                        @include tablet {
+                        @include laptop {
                             color: #000;
                             font-size: 1rem;
                         }
@@ -164,6 +172,12 @@
                         background-color: #ff41416b;
                         .navbar__link__text {
                             color: #000;
+                            @include mobile {
+                                color: #FDFDFD;
+                            }
+                            @include laptop {
+                                color: #000;
+                            }
                         }
                     }
                 }
@@ -195,29 +209,65 @@
                 justify-content: center;
                 align-items: center;
                 &__appcontainer {
+                    margin-top: 1rem;
                     width: 50%;
                     height: fit-content;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
+                    @include mobile {
+                        width: 100%;
+                    }
+                    @include laptop {
+                        width: 50%;
+                    }
                 }
                 &__appwrapper {
-                    width: 70%;
+                    width: 80%;
                     height: fit-content;
                     border: 1px solid #FF4141;
                     padding: 3%;
+                    @include mobile {
+                        width: 95%;
+                    }
+                    @include tablet {
+                        width: 75%;
+                    }
+                    @include laptop {
+                        width: 80%;
+                    }
                     &__form {
                         display: flex;
+                        flex-wrap: wrap;
                         margin: 2rem 0;
                     }
                     &__appinfo {
                         display: flex;
+                        flex-wrap: wrap;
+                        justify-content: space-between;
+                        align-items: center;
                         margin: 2rem 0;
-                        &__subtitlecontainer {
-                            width: 80%;
-                            display: flex;
-                            justify-content: flex-end;
+                        &__title {
+                            font-size: 1rem;
+                            @include mobile {
+                                font-size: 1rem;
+                            }
+                            @include laptop {
+                                font-size: 1rem;
+                            }
+                        }
+                        &__text {
+                            font-size: 1rem;
+                            @include mobile {
+                                font-size: .6rem;
+                            }
+                            @include tablet {
+                                font-size: 1rem;
+                            }
+                            @include laptop {
+                                font-size: 1rem;
+                            }
                         }
                     }
                     &__tasklistwrapper {
@@ -231,17 +281,35 @@
                             margin: 1rem 0;
                         }
                         &__taskcard {
-                            width: 60%;
+                            width: 65%;
                             padding: .6rem 1.4rem;
                             text-align: center;
                             background-color: #FF4141;
                             text-decoration: none;
                             color: #FFF;
+                            @include mobile {
+                                padding: .6rem 1rem;
+                                width: 68%;
+                            }
+                            @include laptop {
+                                width: 65%;
+                                padding: .6rem 1.4rem;
+                            }
                         }
                         &__icons {
                             display: flex;
                             width: 30%;
                             justify-content: space-evenly;
+                            align-items: center;
+                            .lni {
+                                font-size: 1.5rem;
+                                @include mobile {
+                                    font-size: 1.2rem;
+                                }
+                                @include laptop {
+                                    font-size: 1.5rem;
+                                }
+                            }
                         }
                     }
                 }
@@ -250,6 +318,12 @@
                     display: flex;
                     align-items: center;
                     flex-direction: column;
+                    @include mobile {
+                        display: none;
+                    }
+                    @include laptop {
+                        display: flex;
+                    }
                     &__img {
                         width: 80%;
                     }
@@ -284,7 +358,22 @@
             .inputcontainer {
                 width: 65%;
                 margin-right: 2rem;
+                @include mobile {
+                    width: 100%;
+                    margin: 0;
+                    margin-bottom: 1rem;
+                }
+                @include laptop {
+                    width: 55%;
+                    margin: 0;
+                    margin-right: 1rem;
+                }
+                @include laptop_L {
+                    width: 65%;
+                    margin-right: 2rem;
+                }
                 .app_input {
+                    outline: none;
                     width: 100%;
                     height: 2.4rem;
                     padding: 0 15px;
@@ -294,12 +383,15 @@
                     -moz-border-radius: 15px;
                     -ms-border-radius: 15px;
                     -o-border-radius: 15px;
+                    input:placeholder {
+                        font-size: 2rem;
+                    }
                 }
             }
             
             .app_btn {
                 outline: none;
-                padding: .8rem 1.6rem;
+                padding: .8rem 2.2rem;
                 border-radius: 15px;
                 -webkit-border-radius: 15px;
                 -moz-border-radius: 15px;
