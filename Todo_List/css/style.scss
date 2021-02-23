@@ -353,6 +353,19 @@
                         -o-border-radius: 10px;
                     }
                 }
+                &__checkbox {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid #000;
+                    .input_check {
+                        width: 21px;
+                        height: 1.4pc;
+                        border: none;
+                        outline: none;
+                        background-color: #FF4141;
+                    }
+                }
             }
             
             .inputcontainer {
