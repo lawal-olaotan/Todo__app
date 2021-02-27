@@ -6,7 +6,14 @@ const editTask = document.querySelector("#edittask");
 const deleteTask = document.querySelector("#deletetask");
 const completeTask = document.querySelector("#checktask");
 
-let taskData = [];
+let taskDatas = [];
+
+// description variables
+descripWrapper = document.querySelector('#description');
+descripForm = document.querySelector('#description__form');
+SkipBtn = document.querySelector('#skipbtn');
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -16,9 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     openMenu.addEventListener("click", openAndClose, false);
     closeMenu.addEventListener("click", openAndClose, false);
-
-    openAndClose()
-
 
 
 
@@ -32,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let taskInput = taskForm['taskinput'].value;
 
         // validating if input has data.
-        if (taskinput !== '') {
+        if (taskInput !== "") {
 
             // input task inputdata
             let data = {
@@ -40,42 +44,77 @@ document.addEventListener('DOMContentLoaded', function() {
                 taskInput,
                 isCompleted: false
             };
-
             // push data to the empty array taskData
-            taskData.push(data);
-
+            taskDatas.push(data);
             localStorage.setItem("taskData", JSON.stringify(data));
-
-            addTask(data)
-
             e.target.reset();
 
+            taskForm['taskinput'].focus();
+
+            if (typeof e !== "undefined" && e.currentTarget !== "undefined") {
+                if (taskForm) {
+                    descripWrapper.classList.add('navbar_active');
+                }
+            }
+        } else {
+            alert('Input A task');
+        }
+    });
+
+
+
+
+    descripForm.addEventListener('submit', e => {
+
+        e.preventDefault();
+        if (descripForm !== "") {
+
+            let DescripInput = descripForm['description'].value;
+
+            let descripdata = {
+                DescripInput
+            }
+
+            taskDatas.push(descripdata)
+            console.log(taskDatas);
+
+            if (descripForm) {
+                descripWrapper.classList.remove('navbar_active');
+            }
+            addTask();
+            e.target.reset();
 
         }
-
-        taskForm['taskinput'].focus();
 
     });
 
 
+
+
+
 });
 
-function addTask(data) {
 
+// addTask(data)
+
+
+
+function addTask() {
+
+    const bigData = JSON.parse(localStorage.getItem("taskData"));
     const taskList = document.querySelector('#tasklistwrapper');
+
     taskList.innerHTML += ` <div class="hero__appwrapper__tasklistwrapper__card">
 
-    <a class="hero__appwrapper__tasklistwrapper__taskcard" href="#">${data.taskInput}</a>
+            <a class="hero__appwrapper__tasklistwrapper__taskcard" href="#">${bigData.taskInput}</a>
 
-    <div class="hero__appwrapper__tasklistwrapper__icons">
-        <i class="lni lni-checkbox"></i>
-        <i class="lni lni-pencil-alt"></i>
-        <i class="lni lni-trash"></i>
-    </div>
+            <div class="hero__appwrapper__tasklistwrapper__icons">
+                <i class="lni lni-checkbox"></i>
+                <i class="lni lni-pencil-alt"></i>
+                <i class="lni lni-trash"></i>
+            </div>
 
-</div>`;
-
-
+        </div>`;
 }
 
 function openAndClose(event) {

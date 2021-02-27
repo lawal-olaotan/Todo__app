@@ -198,10 +198,6 @@
                 }
             }
             
-            .navbar_active {
-                display: flex;
-            }
-            
             // hero section 
             .hero {
                 padding: 2%;
@@ -413,4 +409,56 @@
                 border: none;
                 background-color: #FF4141;
                 color: #FFF;
+            }
+            
+            .description {
+                font-family: 'Poppins', sans-serif;
+                height: 100vh;
+                background-color: rgba(0, 0, 0, 0.671);
+                width: 100vw;
+                display: none;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 3;
+                &__wrapper {
+                    padding: 3%;
+                    background-color: #FDFDFD;
+                    border: 1px solid #FF4141;
+                }
+                &__title {
+                    margin: 1rem 0;
+                    font-weight: 500;
+                    color: rgba(0, 0, 0, 0.747);
+                }
+                &__input {
+                    outline: none;
+                    border: 1px solid #FF4141;
+                    margin-bottom: 1rem;
+                    border-radius: 8px;
+                    -webkit-border-radius: 8px;
+                    -moz-border-radius: 8px;
+                    -ms-border-radius: 8px;
+                    -o-border-radius: 8px;
+                    padding: 20px;
+                    &::placeholder {
+                        padding: 12px;
+                    }
+                }
+                &__footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                &__skip {
+                    text-decoration: none;
+                    color: #FF4141;
+                    font-size: 1.2rem;
+                }
+            }
+            
+            .navbar_active {
+                display: flex;
             }
