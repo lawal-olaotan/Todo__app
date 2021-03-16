@@ -743,4 +743,9 @@ body {
   display: -ms-flexbox;
   display: flex;
 }
+
+.updatecontainer {
+  margin: 0;
+  margin-bottom: 1rem;
+}
 /*# sourceMappingURL=style.css.map */

@@ -137,7 +137,7 @@ function addTask() {
 
                                 <div class="hero__appwrapper__tasklistwrapper__icons">
                                     <i class="lni lni-checkbox"></i>
-                                    <i class="lni lni-pencil-alt"></i>
+                                    <i  onclick="editTask(event)" class="lni lni-pencil-alt"></i>
                                     <i class="lni lni-trash deletedItem" id"deletetask" onclick="removeTask(event)"></i>
                                 </div>
 
@@ -147,16 +147,14 @@ function addTask() {
                     <form class="description__wrapper" id="updateform">
                         <h3 class="description__title">Update Your Task </h3>
 
-                        <div class="inputcontainer">
+                        <div class="inputcontainer updatecontainer">
                             <input class="app_input" type="text" id="taskinput" name="taskinput" value="${data.taskInput}">
                         </div>
-
-                        <div class="description_container">
-                            <textarea class="description__input" name="description" id="description" cols="40" rows="12" value="${data.DescripInput}"></textarea>
-                        </div>
+                            <textarea class="description__input" name="description" id="updateddescription" cols="40" rows="12">${data.DescripInput}</textarea>
+                    
                         <div class="description__footer">
-                            <input class="app_btn" type="submit" value="CONFIRM DESCRIPTION" id="submit_description">
-                            <a href="" class="description__skip" id="skipbtn">SKIP</a>
+                            <input class="app_btn" type="submit" value="Update Task" id="submit_update">
+                            <a  onclick="closeupdate(event)" href="" class="description__skip" id="closeupdatebtn">Cancel</a>
                         </div>
                     </form>
                 </section>
@@ -178,7 +176,13 @@ function editTask(event) {
     }
 }
 
+function closeupdate(event){
 
+    event.preventDefault()
+    if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
+        updatelist.classList.remove('navbar_active');
+    }
+}
 
 
 
