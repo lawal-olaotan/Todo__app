@@ -7,6 +7,8 @@ const deleteTask = document.querySelector(".deletedItem");
 const completeTask = document.querySelector("#checktask");
 
 
+const updateform = document.querySelector("#updateform");
+
 
 let taskDatas = [];
 let data = {};
@@ -38,15 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (taskInput.value !== "") {
         // preventing default process
             e.preventDefault();
-
-        // taskform input
-        
-
-
-
         // validating if input has data.
        
-
             // input task inputdata
              data = {
                 id: new Date().getTime(),
@@ -60,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             e.target.reset();
 
-            taskForm['taskinput'].focus();
+            
 
             if (typeof e !== "undefined" && e.currentTarget !== "undefined") {
                 if (taskForm) {
@@ -68,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         } else {
-
             alert('Input A task');
         }
+        taskForm['taskinput'].focus();
     });
 
 
@@ -115,51 +110,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
     })
 
+    
 
-
-    // taskList.addEventListener('click',removeTask)
-
-
-
-
+   
+   
 
 });
 
 
-// addTask(data)
 
-function addTask() {
+function addTask(data) {
 
-    const taskList = document.querySelector('#tasklistwrapper');
-    taskList.innerHTML += ` <div class="hero__appwrapper__tasklistwrapper__card">
+    
+    const taskcard = document.createElement("li");
+    taskcard.setAttribute("id",data.id);
 
-                                <a  onclick="editTask(event)" class="hero__appwrapper__tasklistwrapper__taskcard" href="#">${data.taskInput}</a>
+  const TaskMarkup = ` <div class="hero__appwrapper__tasklistwrapper__card">
+
+                                <a onclick="editTask(event)" ${!task.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" href="#">${data.taskInput}</a>
 
                                 <div class="hero__appwrapper__tasklistwrapper__icons">
-                                    <i class="lni lni-checkbox"></i>
+                                    <i class="lni lni-checkbox" id="${data.taskInput}-${data.id}"></i>
                                     <i  onclick="editTask(event)" class="lni lni-pencil-alt"></i>
                                     <i class="lni lni-trash deletedItem" id"deletetask" onclick="removeTask(event)"></i>
                                 </div>
 
                             </div>
-                            
-                    <section class="description" id="updatelist">
-                    <form class="description__wrapper" id="updateform">
-                        <h3 class="description__title">Update Your Task </h3>
 
-                        <div class="inputcontainer updatecontainer">
-                            <input class="app_input" type="text" id="taskinput" name="taskinput" value="${data.taskInput}">
-                        </div>
-                            <textarea class="description__input" name="description" id="updateddescription" cols="40" rows="12">${data.DescripInput}</textarea>
-                    
-                        <div class="description__footer">
-                            <input class="app_btn" type="submit" value="Update Task" id="submit_update">
-                            <a  onclick="closeupdate(event)" href="" class="description__skip" id="closeupdatebtn">Cancel</a>
-                        </div>
-                    </form>
-                </section>
-                            
-                            `;
+    <section class="description" id="updatelist">
+        <form class="description__wrapper" id="updateform" onsubmit="updateTask(event)">
+            <h3 class="description__title">Update Your Task </h3>
+
+            <div class="inputcontainer updatecontainer">
+                <input class="app_input" type="text" id="updatedinput" name="taskinput" value="${data.taskInput}">
+            </div>
+                <textarea class="description__input" name="description" id="updateddescription" cols="40" rows="12">${data.DescripInput}</textarea>
+        
+            <div class="description__footer">
+                <input class="app_btn" type="submit" value="Update Task" id="submit_update" >
+                <a  onclick="closeupdate(event)" href="" class="description__skip" id="closeupdatebtn">Cancel</a>
+            </div>
+        </form>
+    </section>`;
+
+     taskcard.innerHTML = TaskMarkup;
+     taskList.appendChild(taskcard);
+
+
+}
+
+
+
+function updateTask(event,el,TaskID){
+
+    event.preventDefault();
+
+    let updatedTitle = document.querySelector('#updatedinput');
+    let updateDescrip = document.querySelector('#updateddescription');
+
+    data.taskInput = updatedTitle.value;
+    data.DescripInput = updateDescrip.value; 
+
+  console.log(event.currentTarget);
+  console.log(data);
+   
+    if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
+        updatelist.classList.remove('navbar_active'); 
+    }
+  
 }
 
 function removeTask(event){
@@ -169,6 +187,10 @@ function removeTask(event){
 function editTask(event) {
 
     let updatelist = document.querySelector('#updatelist');
+    const TaskID = event.target.closest("a").id ;
+    
+    updateTask(event,el,TaskID);
+
 
     if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
         updatelist.classList.add('navbar_active');
@@ -183,9 +205,6 @@ function closeupdate(event){
         updatelist.classList.remove('navbar_active');
     }
 }
-
-
-
 
 
 // navbar bar functionalites 
@@ -204,4 +223,5 @@ function openAndClose(event) {
     }
 
 }
+
 
