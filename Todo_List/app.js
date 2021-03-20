@@ -9,20 +9,38 @@ const completeTask = document.querySelector("#checktask");
 
 const updateform = document.querySelector("#updateform");
 
-
-let taskDatas = [];
 let data = {};
+
+
+   
 
 
 // description variables
 descripWrapper = document.querySelector('#description');
+
 descripForm = document.querySelector('#description__form');
+
 descriptionbtn = document.querySelector('#submit_description');
+
 SkipBtn = document.querySelector('#skipbtn');
 
 
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    
+
+
+    let taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
+
+    if(localStorage.getItem("tasklist")){
+        taskDatas.map((data)=>{
+            addTask(data); 
+        });
+    }
+
+
+ 
 
     // opening and closing navbar
     const openMenu = document.querySelector("#openmenu");
@@ -35,33 +53,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // taskfrom eventlistener
     taskForm.addEventListener('submit', e => {
+
         let taskInput = taskForm['taskinput'];
 
         if (taskInput.value !== "") {
-        // preventing default process
-            e.preventDefault();
-        // validating if input has data.
-       
-            // input task inputdata
-             data = {
-                id: new Date().getTime(),
-                taskInput:taskInput.value,
-                isCompleted: false
-            };
+                // preventing default process
+                    e.preventDefault();
+                // validating if input has data.
+                    // input task inputdata
+                    data = {
+                        id: new Date().getTime(),
+                        taskInput:taskInput.value,
+                        isCompleted: false
+                    };
 
-            // console.log(data);
-            // push data to the empty array taskData
-            taskDatas.push(data);
-
-            e.target.reset();
+                    // console.log(data);
+                    // push data to the empty array taskData
+                    taskDatas.push(data);
 
             
+                    localStorage.setItem("tasklist", JSON.stringify(taskDatas));
 
-            if (typeof e !== "undefined" && e.currentTarget !== "undefined") {
-                if (taskForm) {
-                    descripWrapper.classList.add('navbar_active');
-                }
-            }
+                    e.target.reset();
+
+                    if (typeof e !== "undefined" && e.currentTarget !== "undefined") {
+                        if (taskForm) {
+                            descripWrapper.classList.add('navbar_active');
+                        }
+                    }
+
         } else {
             alert('Input A task');
         }
@@ -72,62 +92,49 @@ document.addEventListener('DOMContentLoaded', function() {
     descripForm.addEventListener('submit', e => {
 
         let DescripInput = descripForm['description'];
-        console.log(DescripInput);
-
-        //  DescripValue = DescripInput.value;
+        
+        
         e.preventDefault();
-
 
         if ( DescripInput !== "" && e.target.contains(descriptionbtn)) {
 
             data.DescripInput = DescripInput.value;
-
-            console.log(data);
+        
 
             if (descripForm) {
                 descripWrapper.classList.remove('navbar_active');
             } 
-            addTask();
+            addTask(data);
             descripForm.reset();
-
         }
         
-
     });
-
 
 
     SkipBtn.addEventListener('click', e=>{
         if (e.target.contains(SkipBtn)){
             e.preventDefault();
-                addTask();
+                addTask(data);
                 descripForm.reset();
-                if (SkipBtn) {
-                    descripWrapper.classList.remove('navbar_active');
-                } 
+            descripWrapper.classList.remove('navbar_active');    
         }
                 
 
     })
 
-    
-
-   
-   
 
 });
 
 
-
 function addTask(data) {
 
-    
+    const taskList = document.querySelector('#tasklistwrapper')
+
     const taskcard = document.createElement("li");
     taskcard.setAttribute("id",data.id);
 
-  const TaskMarkup = ` <div class="hero__appwrapper__tasklistwrapper__card">
-
-                                <a onclick="editTask(event)" ${!task.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" href="#">${data.taskInput}</a>
+    const TaskMarkup = `<div class="hero__appwrapper__tasklistwrapper__card">
+                                <a onclick="editTask(event)" ${!data.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" href="#">${data.taskInput}</a>
 
                                 <div class="hero__appwrapper__tasklistwrapper__icons">
                                     <i class="lni lni-checkbox" id="${data.taskInput}-${data.id}"></i>
@@ -135,33 +142,43 @@ function addTask(data) {
                                     <i class="lni lni-trash deletedItem" id"deletetask" onclick="removeTask(event)"></i>
                                 </div>
 
-                            </div>
-
-    <section class="description" id="updatelist">
-        <form class="description__wrapper" id="updateform" onsubmit="updateTask(event)">
-            <h3 class="description__title">Update Your Task </h3>
-
-            <div class="inputcontainer updatecontainer">
-                <input class="app_input" type="text" id="updatedinput" name="taskinput" value="${data.taskInput}">
-            </div>
-                <textarea class="description__input" name="description" id="updateddescription" cols="40" rows="12">${data.DescripInput}</textarea>
-        
-            <div class="description__footer">
-                <input class="app_btn" type="submit" value="Update Task" id="submit_update" >
-                <a  onclick="closeupdate(event)" href="" class="description__skip" id="closeupdatebtn">Cancel</a>
-            </div>
-        </form>
-    </section>`;
+                            </div>`;
 
      taskcard.innerHTML = TaskMarkup;
      taskList.appendChild(taskcard);
+}
 
 
+function editTask(event,data) {
+
+    const uniTaskId = event.currentTarget.closest("li").id;
+    let updatelist = document.querySelector('#updatelist');
+
+    let inputdata = JSON.parse(localStorage.getItem("tasklist"));
+    inputdata.forEach( (obj) => {
+
+       console.log( obj.taskInput);
+       updateform['updatedinput'].value = obj.taskInput
+       updateform['updateddescription'].innerHTML= obj.DescripInput
+    //    updateform['']
+
+    });
+    console.log(data);
+    
+
+    
+    // updateform['updateddescription'].innerHTML = 
+
+
+    if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
+        updatelist.classList.add('navbar_active');
+        
+    }
 }
 
 
 
-function updateTask(event,el,TaskID){
+function updateTask(event,el,){
 
     event.preventDefault();
 
@@ -171,32 +188,21 @@ function updateTask(event,el,TaskID){
     data.taskInput = updatedTitle.value;
     data.DescripInput = updateDescrip.value; 
 
-  console.log(event.currentTarget);
-  console.log(data);
-   
     if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
         updatelist.classList.remove('navbar_active'); 
     }
+
   
 }
+
+
 
 function removeTask(event){
        event.target.parentElement.parentElement.remove();
 }
 
-function editTask(event) {
-
-    let updatelist = document.querySelector('#updatelist');
-    const TaskID = event.target.closest("a").id ;
-    
-    updateTask(event,el,TaskID);
 
 
-    if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
-        updatelist.classList.add('navbar_active');
-        
-    }
-}
 
 function closeupdate(event){
 
