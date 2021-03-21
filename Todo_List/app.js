@@ -18,14 +18,10 @@ deletedData = []
 let uniTaskId;
    
 
-
 // description variables
 descripWrapper = document.querySelector('#description');
-
 descripForm = document.querySelector('#description__form');
-
 descriptionbtn = document.querySelector('#submit_description');
-
 SkipBtn = document.querySelector('#skipbtn');
 
 
@@ -42,7 +38,10 @@ let taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
         });
     }
 
-
+    let updateform = document.querySelector("#updateform");
+    let updatedInput = updateform['updatedinput'];
+    let updatedDesc = updateform['updateddescription'];
+    let updatedid = updateform['id']
 
 
 
@@ -134,6 +133,16 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 
+    updateform.addEventListener('submit',e => {
+            e.preventDefault();
+            let itemid = updatedid.value;
+
+            updatelist(itemid,e.currentTarget);
+          
+
+    })
+
+
 
 });
 
@@ -191,19 +200,14 @@ function addTask(data) {
 function editTask(event) {
 
    const uniTaskId = event.currentTarget.closest("li").id;
-   const updateform = document.querySelector("#updateform");
-    let updatedInput = updateform['updatedinput'];
-    let updatedDesc = updateform['updateddescription'];
 
     let whenposted = document.getElementById('time');
-
     let currentTime = new Date();
     currentTime = moment(currentTime);
-    console.log(currentTime);
+    
 
     let taskDatas = JSON.parse(localStorage.getItem("tasklist"))
     taskDatas = taskDatas.filter((data) => data.id === parseInt(uniTaskId));
-    console.log(taskDatas);
 
 
     if(taskDatas ){
@@ -211,6 +215,8 @@ function editTask(event) {
 
             updatedInput.value = data.taskInput;
             updatedDesc.innerHTML = data.DescripInput;
+            updatedid.value= data.id;
+           
 
             let poseTime = moment(data.SubTimeandDate);
 
@@ -248,11 +254,19 @@ function editTask(event) {
     }
 
 
-
-
-
 }
 
+
+function updatelist(itemid){
+
+    let data = taskDatas.find((data) => data.id === parseInt(itemid));
+    let updateddate = new Date();
+    data.taskInput = updatedInput.value
+    data.SubTimeandDate = updateddate;
+    data.DescripInput = updatedDesc.value
+    
+    localStorage.setItem("tasklist",JSON.stringify(taskDatas));
+}
 
 
 
