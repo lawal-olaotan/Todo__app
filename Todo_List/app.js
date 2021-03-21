@@ -12,8 +12,6 @@ const deleteTask = document.querySelector(".deletedItem");
 const completeTask = document.querySelector("#checktask");
 
 
-const updateform = document.querySelector("#updateform");
-
 
 // let taskDatas=[];
 deletedData = []
@@ -106,9 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if ( DescripInput !== "" && e.target.contains(descriptionbtn)) {
 
             let dateposted = new Date();
-             dateposted = moment(dateposted);
             data.DescripInput = DescripInput.value;
-            data.SubTimeandDate = dateposted.value;
+            data.SubTimeandDate = dateposted;
 
             taskDatas.push(data)
             localStorage.setItem("tasklist", JSON.stringify(taskDatas));
@@ -137,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 
+
 });
 
 
@@ -157,10 +155,6 @@ function removeTask(event){
         taskDatas = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
         localStorage.setItem("tasklist",JSON.stringify(taskDatas));
         document.getElementById(uniTaskId).remove();
-
-
-
-
 
     }
 
@@ -197,36 +191,63 @@ function addTask(data) {
 function editTask(event) {
 
    const uniTaskId = event.currentTarget.closest("li").id;
-    let updateform = document.getElementById('updateform');
+   const updateform = document.querySelector("#updateform");
     let updatedInput = updateform['updatedinput'];
-    let updatedDesc = updateform['updateddescription']; 
+    let updatedDesc = updateform['updateddescription'];
+
     let whenposted = document.getElementById('time');
 
     let currentTime = new Date();
     currentTime = moment(currentTime);
+    console.log(currentTime);
 
+    let taskDatas = JSON.parse(localStorage.getItem("tasklist"))
     taskDatas = taskDatas.filter((data) => data.id === parseInt(uniTaskId));
-     console.log(Object.values(taskDatas));
-        // console.log(newdata);
+    console.log(taskDatas);
 
 
-    
-    // if(dateposted !='' && currentTime !='' ){
+    if(taskDatas ){
+        taskDatas.map((data)=>{
 
-    //     let timeago = moment.duration(currentTime.diff(dateposted));
-    //     let fewseconds = timeago.as('seconds');
-    //     let minutes = timeago.as('minutes');
-    //     console.log(fewseconds);
-    //     console.log(minutes);
-    // }
+            updatedInput.value = data.taskInput;
+            updatedDesc.innerHTML = data.DescripInput;
 
+            let poseTime = moment(data.SubTimeandDate);
+
+            if(poseTime !='' && currentTime !='' ){
+                let timeago = moment.duration(currentTime.diff(poseTime));
+                let fewseconds = timeago.as('seconds');
+                let minutes = timeago.as('minutes');
+                let hours = timeago.as('hours');
+                let days = timeago.as('days')
+
+                if (fewseconds <= 60.0 ){
+
+                    whenposted.innerHTML='<i class="fas fa-clock"></i>' + ' '  + ' Few seconds ago'
+                }else if(minutes <= 60){
+                       whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(minutes).toFixed(0) + ' ' + 'mins ago'
+                }else if(minutes > 60){
+                    whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(hours).toFixed(0) + ' ' + 'hour ago'
+                }else if(hours >= 24){
+                    whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(days).toFixed(0) + ' ' + 'hour ago'
+                }
+            }
+        
+        
+        });
+    }
+
+           
 
 
     let updatelist = document.querySelector('#updatelist');
     if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
         updatelist.classList.add('navbar_active');
+
         
     }
+
+
 
 
 
