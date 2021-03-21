@@ -1,5 +1,10 @@
 // global scope
 
+
+
+// n
+
+
 const clearbtn = document.querySelector('#clearbtn');
 const taskForm = document.querySelector("#taskform");
 // const editTask = document.querySelector("#edittask");
@@ -9,9 +14,10 @@ const completeTask = document.querySelector("#checktask");
 
 const updateform = document.querySelector("#updateform");
 
-let data = {};
 
-
+// let taskDatas=[];
+deletedData = []
+let uniTaskId;
    
 
 
@@ -25,13 +31,12 @@ descriptionbtn = document.querySelector('#submit_description');
 SkipBtn = document.querySelector('#skipbtn');
 
 
+// application data
 
-document.addEventListener('DOMContentLoaded', function() {
+let data = {};
+// let taskDatas = []
 
-    
-
-
-    let taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
+let taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
 
     if(localStorage.getItem("tasklist")){
         taskDatas.map((data)=>{
@@ -40,7 +45,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+
+
+
  
+document.addEventListener('DOMContentLoaded', function() {
+
 
     // opening and closing navbar
     const openMenu = document.querySelector("#openmenu");
@@ -67,12 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         isCompleted: false
                     };
 
-                    // console.log(data);
-                    // push data to the empty array taskData
-                    taskDatas.push(data);
-
-            
-                    localStorage.setItem("tasklist", JSON.stringify(taskDatas));
 
                     e.target.reset();
 
@@ -89,21 +93,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
+
+    
+
+
     descripForm.addEventListener('submit', e => {
 
         let DescripInput = descripForm['description'];
-        
         
         e.preventDefault();
 
         if ( DescripInput !== "" && e.target.contains(descriptionbtn)) {
 
+            let dateposted = new Date();
+             dateposted = moment(dateposted);
             data.DescripInput = DescripInput.value;
-        
+            data.SubTimeandDate = dateposted.value;
 
+            taskDatas.push(data)
+            localStorage.setItem("tasklist", JSON.stringify(taskDatas));
+
+    
             if (descripForm) {
                 descripWrapper.classList.remove('navbar_active');
-            } 
+            }
+
             addTask(data);
             descripForm.reset();
         }
@@ -124,6 +138,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 });
+
+
+function removeTask(event){
+    
+    let targetEle = event.currentTarget
+    let ParentEle = targetEle.parentElement.parentElement
+
+
+    if(targetEle.classList.contains("deletedItem") || ParentEle.classList.contains("deletedItem")){
+
+      uniTaskId = targetEle.closest("li").id;
+
+        
+        deletedData.push(taskDatas.filter((data) => data.id === parseInt(uniTaskId)))
+        localStorage.setItem("deletedlist",JSON.stringify(deletedData));
+
+        taskDatas = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
+        localStorage.setItem("tasklist",JSON.stringify(taskDatas));
+        document.getElementById(uniTaskId).remove();
+
+
+
+
+
+    }
+
+}
+
+
+
 
 
 function addTask(data) {
@@ -149,57 +193,47 @@ function addTask(data) {
 }
 
 
-function editTask(event,data) {
 
-    const uniTaskId = event.currentTarget.closest("li").id;
+function editTask(event) {
+
+   const uniTaskId = event.currentTarget.closest("li").id;
+    let updateform = document.getElementById('updateform');
+    let updatedInput = updateform['updatedinput'];
+    let updatedDesc = updateform['updateddescription']; 
+    let whenposted = document.getElementById('time');
+
+    let currentTime = new Date();
+    currentTime = moment(currentTime);
+
+    taskDatas = taskDatas.filter((data) => data.id === parseInt(uniTaskId));
+     console.log(Object.values(taskDatas));
+        // console.log(newdata);
+
+
+    
+    // if(dateposted !='' && currentTime !='' ){
+
+    //     let timeago = moment.duration(currentTime.diff(dateposted));
+    //     let fewseconds = timeago.as('seconds');
+    //     let minutes = timeago.as('minutes');
+    //     console.log(fewseconds);
+    //     console.log(minutes);
+    // }
+
+
+
     let updatelist = document.querySelector('#updatelist');
-
-    let inputdata = JSON.parse(localStorage.getItem("tasklist"));
-    inputdata.forEach( (obj) => {
-
-       console.log( obj.taskInput);
-       updateform['updatedinput'].value = obj.taskInput
-       updateform['updateddescription'].innerHTML= obj.DescripInput
-    //    updateform['']
-
-    });
-    console.log(data);
-    
-
-    
-    // updateform['updateddescription'].innerHTML = 
-
-
     if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
         updatelist.classList.add('navbar_active');
         
     }
+
+
+
 }
 
 
 
-function updateTask(event,el,){
-
-    event.preventDefault();
-
-    let updatedTitle = document.querySelector('#updatedinput');
-    let updateDescrip = document.querySelector('#updateddescription');
-
-    data.taskInput = updatedTitle.value;
-    data.DescripInput = updateDescrip.value; 
-
-    if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
-        updatelist.classList.remove('navbar_active'); 
-    }
-
-  
-}
-
-
-
-function removeTask(event){
-       event.target.parentElement.parentElement.remove();
-}
 
 
 

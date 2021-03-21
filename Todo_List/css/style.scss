@@ -429,6 +429,12 @@
                     background-color: #FDFDFD;
                     border: 1px solid #FF4141;
                 }
+                &__header{
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: center;
+                }
+                
                 &__title {
                     margin: 1rem 0;
                     font-weight: 500;

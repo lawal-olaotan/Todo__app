@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;700&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
-    <!-- <script src="https://kit.fontawesome.com/5eaa28fea9.js" crossorigin="anonymous"></script> -->
+    <script src="https://kit.fontawesome.com/5eaa28fea9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -109,7 +109,11 @@
 
     <section class="description" id="updatelist">
         <form class="description__wrapper" id="updateform">
-            <h3 class="description__title">Update Your Task</h3>
+            <div class="description__header">
+                <h3 class="description__title">Update Your Task</h3>
+                <span  class="descriptionTime" id="time"> <i class="fas fa-clock"></i> :30mins ago</span>
+            </div>
+            
 
             <div class="inputcontainer updatecontainer">
                 <input class="app_input" type="text" id="updatedinput" name="updatedinput" value="">
@@ -124,10 +128,9 @@
         </form>
     </section>
 
-
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
     <script src="../app.js"></script>
+    
 </body>
 
 </html>

@@ -1,0 +1,11 @@
+node_modules/
+npm-debug.*
+.idea
+coverage
+package-lock.json
+lib
+esm
+dist
+
+timeago.full.min.js
+timeago.min.js
