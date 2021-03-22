@@ -1,19 +1,17 @@
-// global scope
-
-
-
-// n
-
 
 const clearbtn = document.querySelector('#clearbtn');
 const taskForm = document.querySelector("#taskform");
-// const editTask = document.querySelector("#edittask");
 const deleteTask = document.querySelector(".deletedItem");
 
+let totaltask = document.getElementById('totaltask');
+
+let completedtask = document.getElementById('completedtask');
 
 
 // let taskDatas=[];
-deletedData = []
+let deletedData = []
+let completeddata = [];
+
 let uniTaskId;
 let List;
    
@@ -37,12 +35,7 @@ let updatedInput = updateform['updatedinput'];
 let updatedDesc = updateform['updateddescription'];
 let updatedid = updateform['id']
 
-
-
- 
-document.addEventListener('DOMContentLoaded', function() {
-
-    taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
+taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
 
     if(localStorage.getItem("tasklist")){
         taskDatas.map((data)=>{
@@ -50,6 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+ 
+document.addEventListener('DOMContentLoaded', function() {
+
+
+    
 
     // opening and closing navbar
     const openMenu = document.querySelector("#openmenu");
@@ -89,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Input A task');
         }
         taskForm['taskinput'].focus();
+        countTask()
     });
 
 
@@ -118,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             addTask(data);
             descripForm.reset();
+           
         }
         
     });
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
+    countTask()
 
 });
 
@@ -163,18 +163,21 @@ function removeTask(event){
     
     let targetEle = event.currentTarget
     let ParentEle = targetEle.parentElement.parentElement
-
+    uniTaskId = targetEle.closest("li").id;
 
     if(targetEle.classList.contains("deletedItem") || ParentEle.classList.contains("deletedItem")){
 
-      uniTaskId = targetEle.closest("li").id;
+     
 
         
-        deletedData.push(taskDatas.filter((data) => data.id === parseInt(uniTaskId)))
-        localStorage.setItem("deletedlist",JSON.stringify(deletedData));
+        // deletedData.push(taskDatas.filter((data) => data.id === parseInt(uniTaskId)))
+        // localStorage.setItem("deletedlist",JSON.stringify(deletedData));
 
-        taskDatas = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
-        localStorage.setItem("tasklist",JSON.stringify(taskDatas));
+        // taskDatas = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
+        // localStorage.setItem("tasklist",JSON.stringify(taskDatas));
+        // document.getElementById(uniTaskId).remove();
+
+        getData(deletedData,"deletedlist",targetEle);
         document.getElementById(uniTaskId).remove();
 
     }
@@ -196,7 +199,7 @@ function addTask(data) {
                                 <a onclick="editTask(event)" ${!data.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" id="taskcards" href="#">${data.taskInput}</a>
 
                                 <div class="hero__appwrapper__tasklistwrapper__icons">
-                                    <i class="lni lni-checkbox" onclick="completetask(event)" id="${data.taskInput}-${data.id}"></i>
+                                    <i class="lni lni-checkbox" onclick="completetask(event)" id="${data.taskInput}-${data.id}" ${data.isCompleted ? "checked" : ""}></i>
                                     <i  onclick="editTask(event)" class="lni lni-pencil-alt"></i>
                                     <i class="lni lni-trash deletedItem" id"deletetask" onclick="removeTask(event)"></i>
                                 </div>
@@ -244,11 +247,11 @@ function editTask(event) {
                     whenposted.innerHTML='<i class="fas fa-clock"></i>' + ' '  + ' Few seconds ago'
                 }else if(minutes <= 60){
                        whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(minutes).toFixed(0) + ' ' + 'mins ago'
-                }else if(minutes > 60){
+                }else if(minutes > 60 && hours == 1){
                     whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(hours).toFixed(0) + ' ' + 'hour ago'
-                }else if(hours > 1 && hours === 24){
-                    whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(days).toFixed(0) + ' ' + 'hours ago'
-                }else if(hours > 24 ){
+                }else if(hours > 1 ){
+                    whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(hours).toFixed(0) + ' ' + 'hours ago'
+                }else if(hours > 24 && day == 1 ){
                     whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(days).toFixed(0) + ' ' + 'day ago'
                 }
             }
@@ -257,23 +260,16 @@ function editTask(event) {
         });
     }
 
-           
-
-
     let updatelist = document.querySelector('#updatelist');
     if (typeof event !== "undefined" && event.currentTarget !== "undefined") {
-        updatelist.classList.add('navbar_active');
-
-        
+        updatelist.classList.add('navbar_active');    
     }
-
-
 }
 
 
 function updatetask(itemid){
-    let data = taskDatas.find((data) => data.id === parseInt(itemid));
 
+    let data = taskDatas.find((data) => data.id === parseInt(itemid));
     let updateddate = new Date();
     data.taskInput = updatedInput.value
     data.SubTimeandDate = updateddate;
@@ -285,23 +281,22 @@ function updatetask(itemid){
 
 
 function completetask(event){
+
     let comTarget = event.currentTarget;
-    if(comTarget){
-    let editbtn = comTarget.nextElementSibling;
-    let comParent = comTarget.parentElement;
-    let List = comParent.previousElementSibling;
-     List.classList.add('completedtask');
-    editbtn.disable = true;
+    let comParent = comTarget.parentElement
 
-    uniTaskId = event.target.closest("li").id;
-    }else{
-        comTarget.classList.add('lni lni-checkmark');
+    let task = comParent.previousElementSibling;
 
+    data.isCompleted = !data.isCompleted;
+
+    if(data.isCompleted){
+        task.removeAttribute("contentditable");
+        comTarget.setAttribute("checked","")
+        getData(completeddata,"completedtask",comTarget);
+        task.classList.add('completedtask');
+        comTarget.className = 'lni lni-checkmark-circle';
     }
-    
-    
-    
-    
+
 
 
 }
@@ -335,4 +330,25 @@ function openAndClose(event) {
 
 }
 
+
+function getData(filestore,filestring,tarrgetel){
+
+    uniTaskId = tarrgetel.closest("li").id;
+
+    filestore.push(taskDatas.filter((data) => data.id === parseInt(uniTaskId)))
+        localStorage.setItem(filestring,JSON.stringify(filestore));
+
+        taskDatas = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
+        localStorage.setItem("tasklist",JSON.stringify(taskDatas));
+  // document.getElementById(uniTaskId).remove();
+
+}
+
+
+function countTask(){
+
+    totaltask.innerHTML = taskDatas.length ;
+    
+
+}
 

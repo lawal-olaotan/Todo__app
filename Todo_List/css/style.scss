@@ -280,11 +280,16 @@
                         &__taskcard {
                             width: 65%;
                             padding: .6rem 1.4rem;
+                            border-radius:10px ;
+                            -webkit-border-radius:10px ;
+                            -moz-border-radius:10px ;
+                            -ms-border-radius:10px ;
+                            -o-border-radius:10px ;
                             text-align: center;
                             background-color: #FF4141;
                             text-decoration: none;
                             color: #FFF;
-                            @include mobile {
+                            @include mobile{
                                 padding: .6rem 1rem;
                                 width: 68%;
                             }
