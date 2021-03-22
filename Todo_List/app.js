@@ -12,6 +12,8 @@ const deleteTask = document.querySelector(".deletedItem");
 let deletedData = []
 let completeddata = [];
 
+
+
 let uniTaskId;
 let List;
    
@@ -41,15 +43,22 @@ let updatedid = updateform['id']
 document.addEventListener('DOMContentLoaded', function() {
 
     taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
-
     if(localStorage.getItem("tasklist")){
         taskDatas.map((data)=>{
             addTask(data); 
+            countTask();
+    
         });
     }
     
+    completeddata = JSON.parse(localStorage.getItem("completedtask")) || [];
 
-    countTask()
+    if(localStorage.getItem("completedtask")){
+        completeddata.map((comtasks) => {
+            countTask(comtasks);
+        })
+    }
+
     
 
     // opening and closing navbar
@@ -85,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             descripWrapper.classList.add('navbar_active');
                         }
                     }
-                    countTask()
+                   
         } else {
             alert('Input A task');
         }
@@ -120,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             addTask(data);
+            countTask()
             descripForm.reset();
            
         }
@@ -171,18 +181,9 @@ function removeTask(event){
 
     if(targetEle.classList.contains("deletedItem") || ParentEle.classList.contains("deletedItem")){
 
-     
-
-        
-        // deletedData.push(taskDatas.filter((data) => data.id === parseInt(uniTaskId)))
-        // localStorage.setItem("deletedlist",JSON.stringify(deletedData));
-
-        // taskDatas = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
-        // localStorage.setItem("tasklist",JSON.stringify(taskDatas));
-        // document.getElementById(uniTaskId).remove();
-
         getData(deletedData,"deletedlist",targetEle);
         document.getElementById(uniTaskId).remove();
+        countTask()
 
     }
 
