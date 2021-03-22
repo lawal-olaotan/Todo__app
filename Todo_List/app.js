@@ -3,9 +3,9 @@ const clearbtn = document.querySelector('#clearbtn');
 const taskForm = document.querySelector("#taskform");
 const deleteTask = document.querySelector(".deletedItem");
 
-let totaltask = document.getElementById('totaltask');
 
-let completedtask = document.getElementById('completedtask');
+
+
 
 
 // let taskDatas=[];
@@ -35,18 +35,21 @@ let updatedInput = updateform['updatedinput'];
 let updatedDesc = updateform['updateddescription'];
 let updatedid = updateform['id']
 
-taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
+
+
+ 
+document.addEventListener('DOMContentLoaded', function() {
+
+    taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
 
     if(localStorage.getItem("tasklist")){
         taskDatas.map((data)=>{
             addTask(data); 
         });
     }
+    
 
- 
-document.addEventListener('DOMContentLoaded', function() {
-
-
+    countTask()
     
 
     // opening and closing navbar
@@ -82,12 +85,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             descripWrapper.classList.add('navbar_active');
                         }
                     }
-
+                    countTask()
         } else {
             alert('Input A task');
         }
         taskForm['taskinput'].focus();
-        countTask()
+
+        
     });
 
 
@@ -154,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    countTask()
+   
 
 });
 
@@ -295,6 +299,7 @@ function completetask(event){
         getData(completeddata,"completedtask",comTarget);
         task.classList.add('completedtask');
         comTarget.className = 'lni lni-checkmark-circle';
+        countTask()
     }
 
 
@@ -344,11 +349,14 @@ function getData(filestore,filestring,tarrgetel){
 
 }
 
-
 function countTask(){
 
+    let totaltask = document.getElementById('totaltask');
+    let completedtask = document.getElementById('completedtask');
+
     totaltask.innerHTML = taskDatas.length ;
-    
+     completedtask.innerHTML = completeddata.length;
 
 }
+
 
