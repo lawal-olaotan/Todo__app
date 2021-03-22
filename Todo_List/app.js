@@ -9,13 +9,13 @@ const clearbtn = document.querySelector('#clearbtn');
 const taskForm = document.querySelector("#taskform");
 // const editTask = document.querySelector("#edittask");
 const deleteTask = document.querySelector(".deletedItem");
-const completeTask = document.querySelector("#checktask");
 
 
 
 // let taskDatas=[];
 deletedData = []
 let uniTaskId;
+let List;
    
 
 // description variables
@@ -28,25 +28,27 @@ SkipBtn = document.querySelector('#skipbtn');
 // application data
 
 let data = {};
-// let taskDatas = []
+let taskDatas = []
 
-let taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
+
+
+let updateform = document.querySelector("#updateform");
+let updatedInput = updateform['updatedinput'];
+let updatedDesc = updateform['updateddescription'];
+let updatedid = updateform['id']
+
+
+
+ 
+document.addEventListener('DOMContentLoaded', function() {
+
+    taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
 
     if(localStorage.getItem("tasklist")){
         taskDatas.map((data)=>{
             addTask(data); 
         });
     }
-
-    let updateform = document.querySelector("#updateform");
-    let updatedInput = updateform['updatedinput'];
-    let updatedDesc = updateform['updateddescription'];
-    let updatedid = updateform['id']
-
-
-
- 
-document.addEventListener('DOMContentLoaded', function() {
 
 
     // opening and closing navbar
@@ -136,11 +138,21 @@ document.addEventListener('DOMContentLoaded', function() {
     updateform.addEventListener('submit',e => {
             e.preventDefault();
             let itemid = updatedid.value;
-
-            updatelist(itemid,e.currentTarget);
-          
+            let updatelist = document.querySelector('#updatelist');
+            updatelist.classList.remove('navbar_active');
+            updatetask(itemid); 
+            window.location.reload();
 
     })
+
+
+    let closeupdatebtn = document.querySelector('#closeupdatebtn');
+    closeupdatebtn.addEventListener('click',e=>{
+
+        updatelist.classList.remove('navbar_active');
+    })
+
+
 
 
 
@@ -181,10 +193,10 @@ function addTask(data) {
     taskcard.setAttribute("id",data.id);
 
     const TaskMarkup = `<div class="hero__appwrapper__tasklistwrapper__card">
-                                <a onclick="editTask(event)" ${!data.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" href="#">${data.taskInput}</a>
+                                <a onclick="editTask(event)" ${!data.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" id="taskcards" href="#">${data.taskInput}</a>
 
                                 <div class="hero__appwrapper__tasklistwrapper__icons">
-                                    <i class="lni lni-checkbox" id="${data.taskInput}-${data.id}"></i>
+                                    <i class="lni lni-checkbox" onclick="completetask(event)" id="${data.taskInput}-${data.id}"></i>
                                     <i  onclick="editTask(event)" class="lni lni-pencil-alt"></i>
                                     <i class="lni lni-trash deletedItem" id"deletetask" onclick="removeTask(event)"></i>
                                 </div>
@@ -199,7 +211,7 @@ function addTask(data) {
 
 function editTask(event) {
 
-   const uniTaskId = event.currentTarget.closest("li").id;
+    uniTaskId = event.currentTarget.closest("li").id;
 
     let whenposted = document.getElementById('time');
     let currentTime = new Date();
@@ -257,18 +269,40 @@ function editTask(event) {
 }
 
 
-function updatelist(itemid){
-
+function updatetask(itemid){
     let data = taskDatas.find((data) => data.id === parseInt(itemid));
+
     let updateddate = new Date();
     data.taskInput = updatedInput.value
     data.SubTimeandDate = updateddate;
     data.DescripInput = updatedDesc.value
-    
+
     localStorage.setItem("tasklist",JSON.stringify(taskDatas));
 }
 
 
+
+function completetask(event){
+    let comTarget = event.currentTarget;
+    if(comTarget){
+    let editbtn = comTarget.nextElementSibling;
+    let comParent = comTarget.parentElement;
+    let List = comParent.previousElementSibling;
+     List.classList.add('completedtask');
+    editbtn.disable = true;
+
+    uniTaskId = event.target.closest("li").id;
+    }else{
+        comTarget.classList.add('lni lni-checkmark');
+
+    }
+    
+    
+    
+    
+
+
+}
 
 
 
