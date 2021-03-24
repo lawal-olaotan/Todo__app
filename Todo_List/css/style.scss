@@ -135,7 +135,7 @@
                             position: unset;
                             top: 0px;
                             width: 38px;
-                            margin-right: .5rem;
+                            margin-left: .5rem;
                             border-radius: 15px;
                             -webkit-border-radius: 15px;
                             -moz-border-radius: 15px;
@@ -200,10 +200,12 @@
             
             // hero section 
             .hero {
+                
                 padding: 2%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                display: none;
                 &__appcontainer {
                     margin-top: 1rem;
                     width: 50%;
@@ -554,4 +556,9 @@
                     margin-right: 1rem;
                 }
             }
+         }
+
+
+         #completedtask{
+             display: flex;
          }

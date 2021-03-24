@@ -222,7 +222,7 @@ body {
     position: unset;
     top: 0px;
     width: 38px;
-    margin-right: .5rem;
+    margin-left: .5rem;
     border-radius: 15px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
@@ -317,6 +317,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  display: none;
 }
 
 .hero__appcontainer {
@@ -867,5 +868,11 @@ body {
   text-decoration: none;
   color: #FDFDFD;
   margin-right: 1rem;
+}
+
+#completedtask {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 /*# sourceMappingURL=style.css.map */

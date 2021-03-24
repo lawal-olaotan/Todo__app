@@ -30,19 +30,18 @@
                 <i class="lni lni-close" id="closemenu"></i>
             </div>
 
-            <li class="navbar__link  ">
+            <li class="navbar__link">
                 <a href="#" class="navbar__link__text">Add Task</a>
                 <span href="#" id="totaltask" class="navbar__link__popup"></span>
             </li>
 
-            <li class="navbar__link ">
+            <li class="navbar__link">
                 <a href="#"  class="navbar__link__text">Completed Tasks</a>
                 <a href="#" id="completedtask" class="navbar__link__popup ">2</a>
             </li>
 
             <li class="navbar__link">
-                <a href="#" class="navbar__link__text">Trash</a>
-               
+                <a href="#" class="navbar__link__text">Trash</a> 
             </li>
         </ul>
 
@@ -53,7 +52,7 @@
     </nav>
 
 
-    <section class="hero">
+    <section class="hero" id="addtask">
 
         <div class="hero__appcontainer">
 
@@ -92,6 +91,52 @@
             </div>
         </div>
     </section>
+
+
+    <section class="hero" id="completedtask">
+
+        <div class="hero__appcontainer">
+
+            <div class="hero__appwrapper">
+
+
+                <div class="hero__appwrapper__appinfo">
+                    <h4 class="hero__appwrapper__appinfo__title">Completed Task List</h4>
+                    <p class="hero__appwrapper__appinfo__text"><span>You can revert all completed tasks here</span></p>
+                </div>
+
+                <ol class="hero__appwrapper__tasklistwrapper" id="tasklistwrapper">
+                    <div class="hero__appwrapper__tasklistwrapper__card">
+                        <a onclick="editTask(event)" ${!data.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" id="taskcards" href="#">${data.taskInput}</a>
+
+                        <div class="hero__appwrapper__tasklistwrapper__icons">
+                            <i class="lni lni-checkbox" onclick="completetask(event)" id="${data.taskInput}-${data.id}" ${data.isCompleted ? "checked" : ""}></i>
+                            <i  onclick="editTask(event)" class="lni lni-pencil-alt"></i>
+                            <i class="lni lni-trash deletedItem" id"deletetask" onclick="removeTask(event)"></i>
+                        </div>
+
+                    </div>
+                </ol>
+
+            </div>
+
+            <div class="hero__clearbtn">
+                <a class="hero__clearbtn__btn" id="clearbtn" href="#">RESET APP</a>
+            </div>
+        </div>
+
+        <div class="hero__content">
+            <div class="hero__content__img">
+                <img class="hero__content__pic" src="../hero.svg" alt="Vanilla Todo">
+            </div>
+            <div class="hero__content__text">
+                <p class="hero__content__title">
+                    <span>Productivity over anything </span>
+                </p>
+            </div>
+        </div>
+    </section>
+
 
     <section class="description" id="description">
 
