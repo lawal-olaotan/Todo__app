@@ -138,8 +138,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     SkipBtn.addEventListener('click', e=>{
+
+        e.preventDefault();
         if (e.target.contains(SkipBtn)){
-            e.preventDefault();
+            let dateposted = new Date();
+            data.DescripInput = '';
+            data.SubTimeandDate = dateposted;
+
+            taskDatas.push(data)
+            localStorage.setItem("tasklist", JSON.stringify(taskDatas));
+            
                 addTask(data);
                 descripForm.reset();
             descripWrapper.classList.remove('navbar_active');    
@@ -254,10 +262,12 @@ function editTask(event) {
                        whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(minutes).toFixed(0) + ' ' + 'mins ago'
                 }else if(minutes > 60 && hours == 1){
                     whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(hours).toFixed(0) + ' ' + 'hour ago'
-                }else if(hours > 1 ){
+                }else if(hours > 1 && hours <= 24 ){
                     whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(hours).toFixed(0) + ' ' + 'hours ago'
-                }else if(hours > 24 && day == 1 ){
+                }else if(hours > 24 && days == 1 ){
                     whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(days).toFixed(0) + ' ' + 'day ago'
+                }else if(days > 1){
+                    whenposted.innerHTML  = '<i class="fas fa-clock"></i>' + ' ' + parseFloat(days).toFixed(0) + ' ' + 'days ago'
                 }
             }
         

@@ -655,7 +655,7 @@ body {
   font-size: 2rem;
 }
 
-.app_btn {
+.app_btn, .description__btn {
   outline: none;
   padding: .8rem 2.2rem;
   border-radius: 15px;
@@ -692,6 +692,36 @@ body {
   border: 1px solid #FF4141;
 }
 
+@media screen and (min-width: 320px) {
+  .description__wrapper {
+    width: 92%;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .description__wrapper {
+    width: 52%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .description__wrapper {
+    width: 39%;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .description__wrapper {
+    width: 30%;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .description__wrapper {
+    width: 20%;
+  }
+}
+
 .description__header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -720,6 +750,7 @@ body {
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
   padding: 20px;
+  width: 100%;
 }
 
 .description__input::-webkit-input-placeholder {
@@ -756,6 +787,12 @@ body {
   font-size: 1.2rem;
 }
 
+@media screen and (min-width: 320px) {
+  .description__btn {
+    padding: .8rem 1.2rem;
+  }
+}
+
 .navbar_active {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -771,5 +808,64 @@ body {
   color: #FDFDFD;
   background-color: rgba(0, 0, 0, 0.56);
   text-decoration: line-through;
+}
+
+.footer {
+  position: relative;
+  background: black;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 10vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media screen and (min-width: 320px) {
+  .footer {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .footer {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 320px) {
+  .footer .logo {
+    position: relative;
+    right: 0;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .footer .logo {
+    float: right;
+    position: absolute;
+    right: 3pc;
+  }
+}
+
+.footer .logo .fab {
+  text-decoration: none;
+  color: #FDFDFD;
+  margin-right: 1rem;
 }
 /*# sourceMappingURL=style.css.map */

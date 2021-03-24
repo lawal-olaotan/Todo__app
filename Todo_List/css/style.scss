@@ -415,6 +415,7 @@
                 border: none;
                 background-color: #FF4141;
                 color: #FFF;
+                
             }
             
             .description {
@@ -429,10 +430,26 @@
                 top: 0;
                 right: 0;
                 z-index: 3;
+               
                 &__wrapper {
                     padding: 3%;
                     background-color: #FDFDFD;
                     border: 1px solid #FF4141;
+                    @include mobile{
+                        width: 92%;
+                    }
+                    @include tablet{
+                        width: 52%;
+                    }
+                    @include laptop{
+                        width: 39%;
+                    }
+                    @include laptop_L{
+                        width: 30%;
+                    }
+                    @include laptop_W{
+                        width: 20%;
+                    }
                 }
                 &__header{
                  display: flex;
@@ -455,6 +472,8 @@
                     -ms-border-radius: 8px;
                     -o-border-radius: 8px;
                     padding: 20px;
+                    width: 100%;
+                    
                     &::placeholder {
                         padding: 12px;
                     }
@@ -469,8 +488,17 @@
                     color: #FF4141;
                     font-size: 1.2rem;
                 }
+
+                &__btn{
+                    @extend .app_btn;
+                    @include mobile{
+                        padding: .8rem 1.2rem;
+                    }
+                }
             }
             
+
+
             .navbar_active {
                 display: flex;
             }
@@ -485,4 +513,45 @@
              color: #FDFDFD;
              background-color: rgba(0, 0, 0,0.56);
              text-decoration: line-through;
+         }
+
+
+         
+         .footer{
+             position: relative;
+            background: black;
+            color: white;
+            display: flex;
+            height: 10vh;
+            justify-content: center;
+            align-items: center;
+
+            @include mobile{
+                flex-direction: column;
+            }
+            @include tablet{
+                flex-direction: row;
+            }
+           
+
+            .logo{
+                
+                @include mobile{
+                    position: relative;
+                    right: 0;
+                    align-self: center;
+                    margin-top: 1rem;
+                }
+                @include tablet{
+                    float: right;
+                    position: absolute;
+                    right: 3pc;
+                }
+
+                .fab{
+                    text-decoration: none;
+                    color: #FDFDFD;
+                    margin-right: 1rem;
+                }
+            }
          }
