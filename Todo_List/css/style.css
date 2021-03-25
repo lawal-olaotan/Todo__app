@@ -302,15 +302,8 @@ body {
   }
 }
 
-.active .navbar__link__popup {
-  display: none;
-}
-
 .hero {
   padding: 2%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -870,7 +863,11 @@ body {
   margin-right: 1rem;
 }
 
-#completedtask {
+#comtaskcard {
+  background-color: #000;
+}
+
+.active-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

@@ -193,16 +193,13 @@
                         color: #FF4141;
                     }
                 }
-                .navbar__link__popup {
-                    display: none;
-                }
             }
             
             // hero section 
             .hero {
                 
                 padding: 2%;
-                display: flex;
+                // display: flex;
                 justify-content: center;
                 align-items: center;
                 display: none;
@@ -559,6 +556,17 @@
          }
 
 
-         #completedtask{
-             display: flex;
+         
+
+
+
+         #comtaskcard{
+             background-color: #000;
          }
+
+         
+         
+         .active-content{
+            display: flex;
+         }
+        

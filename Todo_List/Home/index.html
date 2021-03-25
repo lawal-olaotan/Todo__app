@@ -52,7 +52,7 @@
     </nav>
 
 
-    <section class="hero" id="addtask">
+    <section class="hero " id="addtask">
 
         <div class="hero__appcontainer">
 
@@ -93,7 +93,7 @@
     </section>
 
 
-    <section class="hero" id="completedtask">
+    <section class="hero " id="completedtask">
 
         <div class="hero__appcontainer">
 
@@ -102,21 +102,41 @@
 
                 <div class="hero__appwrapper__appinfo">
                     <h4 class="hero__appwrapper__appinfo__title">Completed Task List</h4>
-                    <p class="hero__appwrapper__appinfo__text"><span>You can revert all completed tasks here</span></p>
+                    <p class="hero__appwrapper__appinfo__text"><span>You can revert or delete tasks here</span></p>
                 </div>
 
-                <ol class="hero__appwrapper__tasklistwrapper" id="tasklistwrapper">
-                    <div class="hero__appwrapper__tasklistwrapper__card">
-                        <a onclick="editTask(event)" ${!data.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" id="taskcards" href="#">${data.taskInput}</a>
+                <ol class="hero__appwrapper__tasklistwrapper" id="completedlistwrapper"> </ol>
 
-                        <div class="hero__appwrapper__tasklistwrapper__icons">
-                            <i class="lni lni-checkbox" onclick="completetask(event)" id="${data.taskInput}-${data.id}" ${data.isCompleted ? "checked" : ""}></i>
-                            <i  onclick="editTask(event)" class="lni lni-pencil-alt"></i>
-                            <i class="lni lni-trash deletedItem" id"deletetask" onclick="removeTask(event)"></i>
-                        </div>
+            </div>
 
-                    </div>
-                </ol>
+           
+        </div>
+
+        <div class="hero__content">
+            <div class="hero__content__img">
+                <img class="hero__content__pic" src="../Done-rafiki.svg" alt="Vanilla Todo">
+            </div>
+            <div class="hero__content__text">
+                <p class="hero__content__title">
+                    <span>You're doing great</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero " id="trash">
+
+        <div class="hero__appcontainer">
+
+            <div class="hero__appwrapper">
+
+
+                <div class="hero__appwrapper__appinfo">
+                    <h4 class="hero__appwrapper__appinfo__title">Deleted Task List</h4>
+                    <p class="hero__appwrapper__appinfo__text"><span>You can revert tasks or reset your app here</span></p>
+                </div>
+
+                <ol class="hero__appwrapper__tasklistwrapper" id="completedlistwrapper"> </ol>
 
             </div>
 
@@ -127,11 +147,11 @@
 
         <div class="hero__content">
             <div class="hero__content__img">
-                <img class="hero__content__pic" src="../hero.svg" alt="Vanilla Todo">
+                <img class="hero__content__pic" src="../Inbox cleanup-rafiki.svg" alt="Vanilla Todo">
             </div>
             <div class="hero__content__text">
                 <p class="hero__content__title">
-                    <span>Productivity over anything </span>
+                    <span>What You deleted so far</span>
                 </p>
             </div>
         </div>

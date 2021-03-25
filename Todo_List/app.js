@@ -42,6 +42,9 @@ let updatedid = updateform['id']
  
 document.addEventListener('DOMContentLoaded', function() {
 
+    
+
+
     taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
     if(localStorage.getItem("tasklist")){
         taskDatas.map((data)=>{
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(localStorage.getItem("completedtask")){
         completeddata.map((comtasks) => {
             countTask(comtasks);
+           
         })
     }
 
@@ -147,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             taskDatas.push(data)
             localStorage.setItem("tasklist", JSON.stringify(taskDatas));
-            
+
                 addTask(data);
                 descripForm.reset();
             descripWrapper.classList.remove('navbar_active');    
@@ -174,11 +178,39 @@ document.addEventListener('DOMContentLoaded', function() {
         updatelist.classList.remove('navbar_active');
     })
 
-
-
    
 
 });
+
+    function openTab(e,contentName){
+
+        let i,tabs,appcontent;
+
+        tabs = document.querySelectorAll(".navbar__link");
+        appcontent = document.querySelectorAll(".hero");
+       
+        for(let i = 0 ;i <appcontent.length ; i++){
+            console.log(appcontent[i]);
+        }
+
+
+        for (let i = 0 ; i<tabs.length ; i++){
+            tabs[i].className = tabs[i].className.replace("active","");
+        }
+
+        let addtask = document.getElementById('addtask');
+
+        addtask.classList.add('active-content');
+    }
+
+
+
+
+
+
+
+
+
 
 
 function removeTask(event){
@@ -189,7 +221,7 @@ function removeTask(event){
 
     if(targetEle.classList.contains("deletedItem") || ParentEle.classList.contains("deletedItem")){
 
-        getData(deletedData,"deletedlist",targetEle);
+        sendDatas(deletedData,"deletedlist",targetEle,taskDatas,"tasklist");
         document.getElementById(uniTaskId).remove();
         countTask()
 
@@ -199,10 +231,24 @@ function removeTask(event){
 
 
 
+function removecompTask(e){
+
+    let deltarget = e.target;
+    uniTaskId = deltarget.closest("li").id;
+    if(targetEle.classList.contains("deletedItem")){
+        sendDatas(deletedData,"deletedlist",deltarget,completeddata,"completedtask");
+        document.getElementById(uniTaskId).remove();
+        countTask()
+    }
+
+}
+
+
 
 
 function addTask(data) {
 
+    console.log(data.taskInput)
     const taskList = document.querySelector('#tasklistwrapper')
 
     const taskcard = document.createElement("li");
@@ -222,6 +268,7 @@ function addTask(data) {
      taskcard.innerHTML = TaskMarkup;
      taskList.appendChild(taskcard);
 }
+
 
 
 
@@ -307,17 +354,58 @@ function completetask(event){
     if(data.isCompleted){
         task.removeAttribute("contentditable");
         comTarget.setAttribute("checked","")
-        getData(completeddata,"completedtask",comTarget);
+        sendDatas(completeddata,"completedtask",comTarget,taskDatas,"tasklist")
         task.classList.add('completedtask');
         comTarget.className = 'lni lni-checkmark-circle';
+        addcompletedTask(completeddata);
         countTask()
     }
-
-
 
 }
 
 
+
+function addcompletedTask(completeddata){
+
+
+    let completedList = document.querySelector('#completedlistwrapper');
+    let completedcard = document.createElement("li");
+    
+    if(completeddata){
+        completeddata.map((comtasks) => {
+
+            completedcard.setAttribute("id",comtasks.id);
+        
+            const completeMarkup = `
+                <div class="hero__appwrapper__tasklistwrapper__card">
+                <a  ${!data.isCompleted?"contentditable":""}  class="hero__appwrapper__tasklistwrapper__taskcard" id="comtaskcard" href="#">${comtasks.taskInput}</a>
+
+                <div class="hero__appwrapper__tasklistwrapper__icons">
+                    <i class="fas fa-exchange-alt" onclick="reverttask(event)" id=${comtasks.id}></i>
+                    <i class="lni lni-trash deletedItem" id"deletecomptask" onclick="removecompTask(event)"></i>
+                </div>
+
+                </div>`;
+
+            completedcard.innerHTML = completeMarkup;
+            completedList.appendChild(completedcard);
+
+
+        })
+    }
+    
+     
+
+}
+
+
+function reverttask(e){
+    let completedtargetid = e.target;
+    e.target.setAttribute("checked","")
+    sendDatas(taskDatas,"tasklist",completedtargetid,completeddata,"completedtask");
+    countTask()
+
+}
 
 
 function closeupdate(event){
@@ -347,24 +435,38 @@ function openAndClose(event) {
 }
 
 
-function getData(filestore,filestring,tarrgetel){
+// function getData(filestore,filestring,tarrgetel){
+
+//     uniTaskId = tarrgetel.closest("li").id;
+
+//     filestore.push(taskDatas.filter((data) => data.id === parseInt(uniTaskId)))
+//         localStorage.setItem(filestring,JSON.stringify(filestore));
+
+//         taskDatas = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
+//         localStorage.setItem("tasklist",JSON.stringify(taskDatas));
+//   // document.getElementById(uniTaskId).remove();
+
+// }
+
+function sendDatas(filestore,filestring,tarrgetel,dataorigin,dataoriginstring){
 
     uniTaskId = tarrgetel.closest("li").id;
 
-    filestore.push(taskDatas.filter((data) => data.id === parseInt(uniTaskId)))
+    filestore.push(dataorigin.filter((data) => data.id === parseInt(uniTaskId)))
         localStorage.setItem(filestring,JSON.stringify(filestore));
 
-        taskDatas = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
-        localStorage.setItem("tasklist",JSON.stringify(taskDatas));
+        dataorigin = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
+        localStorage.setItem(dataoriginstring,JSON.stringify(dataorigin));
   // document.getElementById(uniTaskId).remove();
 
 }
+
+
 
 function countTask(){
 
     let totaltask = document.getElementById('totaltask');
     let completedtask = document.getElementById('completedtask');
-
     totaltask.innerHTML = taskDatas.length ;
      completedtask.innerHTML = completeddata.length;
 
