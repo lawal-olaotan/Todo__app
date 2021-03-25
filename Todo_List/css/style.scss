@@ -116,7 +116,7 @@
                 &__link {
                     display: flex;
                     position: relative;
-                    padding: 1rem 1.2rem;
+                    padding: .6rem 1.2rem;
                     align-items: center;
                     &__popup {
                         text-decoration: none;
@@ -183,26 +183,15 @@
                 }
             }
             
-            .active {
-                .navbar__link__text {
-                    color: #FF4141;
-                    @include mobile {
-                        color: #FFF;
-                    }
-                    @include tablet {
-                        color: #FF4141;
-                    }
-                }
-            }
+           
             
             // hero section 
             .hero {
-                
                 padding: 2%;
-                // display: flex;
+                display: none;
                 justify-content: center;
                 align-items: center;
-                display: none;
+                animation: fadeEffect 1s; 
                 &__appcontainer {
                     margin-top: 1rem;
                     width: 50%;
@@ -368,6 +357,18 @@
                     }
                 }
             }
+
+            @keyframes fadeEffect {
+                from {opacity: 0;}
+                to {opacity: 1;}
+              }
+
+
+
+
+
+
+
             
             .inputcontainer {
                 width: 65%;
@@ -517,7 +518,7 @@
 
          
          .footer{
-             position: relative;
+             position: sticky;
             background: black;
             color: white;
             display: flex;
@@ -570,3 +571,8 @@
             display: flex;
          }
         
+
+         .active__tab {
+            background-color: #ff41416b;
+            font-style: #FDFDFD;
+        }

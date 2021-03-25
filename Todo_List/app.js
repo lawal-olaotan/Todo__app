@@ -38,8 +38,24 @@ let updatedDesc = updateform['updateddescription'];
 let updatedid = updateform['id']
 
 
+// add task variables 
+let tasktab = document.querySelector('#DefaultTab');
+const taskContent  = document.querySelector('#addtask');
 
- 
+
+//  completed task variables
+const completednav = document.getElementById('completednav');
+const completedtaskid = document.getElementById('completedtaskcontent');
+
+// trash task variables 
+const trashcontent = document.querySelector('#trashcontent');
+const trashnav = document.querySelector('#trashnav');
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
     
@@ -58,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(localStorage.getItem("completedtask")){
         completeddata.map((comtasks) => {
+            addcompletedTask(comtasks)
             countTask(comtasks);
            
         })
@@ -174,40 +191,62 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let closeupdatebtn = document.querySelector('#closeupdatebtn');
     closeupdatebtn.addEventListener('click',e=>{
-
         updatelist.classList.remove('navbar_active');
     })
 
+
+    defaultnav();
+
+    
+    tasktab.addEventListener('click',e=>{
+
+       if(tasktab){
+            addNavActive(tasktab,completednav,trashnav);
+            addcontent(taskContent,completedtaskid,trashcontent);
+        }
+    });
+
+
+    completednav.addEventListener('click',e=>{    
+        if(completednav){
+            addNavActive(completednav,trashnav,tasktab);
+            addcontent(completedtaskid,trashcontent,taskContent)  
+        }  
+    })
+
+
+    trashnav.addEventListener('click',e=>{
+        if(trashnav){
+            addNavActive(trashnav,completednav,tasktab);
+            addcontent(trashcontent,completedtaskid,taskContent)     
+        } 
+    })
+
+    
    
 
 });
 
-    function openTab(e,contentName){
 
-        let i,tabs,appcontent;
-
-        tabs = document.querySelectorAll(".navbar__link");
-        appcontent = document.querySelectorAll(".hero");
-       
-        for(let i = 0 ;i <appcontent.length ; i++){
-            console.log(appcontent[i]);
-        }
-
-
-        for (let i = 0 ; i<tabs.length ; i++){
-            tabs[i].className = tabs[i].className.replace("active","");
-        }
-
-        let addtask = document.getElementById('addtask');
-
-        addtask.classList.add('active-content');
+    function defaultnav(){
+        tasktab.classList.add('active__tab');
+        taskContent.classList.add('active-content');
     }
 
 
+    function addcontent(tagnewele,existingeleone,existingeletwo){
+        tagnewele.classList.add('active-content')
+        existingeleone.classList.remove('active-content')
+        existingeletwo.classList.remove('active-content')
+    }
 
 
-
-
+    function addNavActive(tagnewele,existingeleone,existingeletwo){
+        tagnewele.classList.add('active__tab');
+        existingeleone.classList.remove('active__tab');
+        existingeletwo.classList.remove('active__tab');
+    }
+   
 
 
 

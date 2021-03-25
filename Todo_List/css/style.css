@@ -190,7 +190,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   position: relative;
-  padding: 1rem 1.2rem;
+  padding: .6rem 1.2rem;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -286,31 +286,17 @@ body {
   }
 }
 
-.active .navbar__link__text {
-  color: #FF4141;
-}
-
-@media screen and (min-width: 320px) {
-  .active .navbar__link__text {
-    color: #FFF;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .active .navbar__link__text {
-    color: #FF4141;
-  }
-}
-
 .hero {
   padding: 2%;
+  display: none;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  display: none;
+  -webkit-animation: fadeEffect 1s;
+          animation: fadeEffect 1s;
 }
 
 .hero__appcontainer {
@@ -604,6 +590,24 @@ body {
   background-color: #FF4141;
 }
 
+@-webkit-keyframes fadeEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .inputcontainer {
   width: 65%;
   margin-right: 2rem;
@@ -805,7 +809,8 @@ body {
 }
 
 .footer {
-  position: relative;
+  position: -webkit-sticky;
+  position: sticky;
   background: black;
   color: white;
   display: -webkit-box;
@@ -871,5 +876,10 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.active__tab {
+  background-color: #ff41416b;
+  font-style: #FDFDFD;
 }
 /*# sourceMappingURL=style.css.map */
