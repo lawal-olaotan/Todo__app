@@ -114,10 +114,19 @@
                 }
                 // navbar link
                 &__link {
+                    text-decoration: none;
                     display: flex;
                     position: relative;
                     padding: .6rem 1.2rem;
+                    
                     align-items: center;
+                    color: black;
+                    @include mobile{
+                        margin: 1rem 0;
+                    }
+                    @include tablet{
+                        margin:0;
+                    }
                     &__popup {
                         text-decoration: none;
                         display: flex;
@@ -461,6 +470,12 @@
                     margin: 1rem 0;
                     font-weight: 500;
                     color: rgba(0, 0, 0, 0.747);
+                    @include mobile{
+                        font-size: .8rem;
+                    }
+                    @include tablet{
+                        font-size: 1rem;
+                    }
                 }
                 &__input {
                     outline: none;
@@ -565,10 +580,17 @@
              background-color: #000;
          }
 
+         #trashcard{
+             background-color: rgb(235, 139, 22);
+         }
+
          
          
          .active-content{
             display: flex;
+
+            
+            
          }
 
          
@@ -579,6 +601,11 @@
             .navbar__link__popup{
                 display: none;
             }
+
+            .navbar_active{
+                display: none;
+            }
+
         }
 
 
