@@ -401,7 +401,7 @@
                 .app_input {
                     outline: none;
                     width: 100%;
-                    height: 2.4rem;
+                    height: 3rem;
                     padding: 0 15px;
                     border: 1px solid #FF4141;
                     border-radius: 15px;
@@ -431,7 +431,7 @@
             
             .description {
                 font-family: 'Poppins', sans-serif;
-                height: 100vh;
+                height: 90vh;
                 background-color: rgba(0, 0, 0, 0.671);
                 width: 100vw;
                 display: none;
@@ -502,10 +502,17 @@
                 }
                 &__skip {
                     text-decoration: none;
-                    color: #FF4141;
-                    font-size: 1.2rem;
-                }
-
+                    border: none;
+                    background-color: #000;
+                    color: #FFF;
+                    font-size: 1rem;
+                    padding: .4rem .8rem;
+                    border-radius:10px;
+                    -webkit-border-radius:10px;
+                    -moz-border-radius:10px;
+                    -ms-border-radius:10px;
+                    -o-border-radius:10px;
+                    }
                 &__btn{
                     @extend .app_btn;
                     @include mobile{
