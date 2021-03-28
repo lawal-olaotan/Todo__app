@@ -925,6 +925,18 @@ body {
   padding: .6rem 1.2rem;
 }
 
+@media screen and (min-width: 320px) {
+  .active__tab {
+    color: #FFF;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .active__tab {
+    color: #000;
+  }
+}
+
 .active__tab .navbar__link__popup {
   display: none;
 }

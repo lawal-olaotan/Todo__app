@@ -612,6 +612,12 @@
             background-color: #ff41416b;
             color: #000;
             padding: .6rem 1.2rem;
+            @include mobile{
+                color: #FFF;
+            }
+            @include tablet{
+                color: #000;
+            }
                     
 
             .navbar__link__popup{
