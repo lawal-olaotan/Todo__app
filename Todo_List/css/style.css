@@ -912,7 +912,7 @@ body {
 
 .active__tab {
   background-color: #ff41416b;
-  color: #FFF;
+  color: #000;
   padding: .6rem 1.2rem;
 }
 
