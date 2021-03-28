@@ -57,6 +57,8 @@
                     }
                     &__text {
                         font-size: 1.6rem;
+                        font-weight: 600;
+                        text-decoration: none;
                         color: #FF4141;
                         @include mobile {
                             font-size: 1.4rem;
