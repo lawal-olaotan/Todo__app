@@ -1,7 +1,5 @@
 
 
-
-
 const clearbtn = document.querySelector('#clearbtn');
 const taskForm = document.querySelector("#taskform");
 const deleteTask = document.querySelector(".deletedItem");
@@ -13,7 +11,9 @@ let completedtaskpop = document.getElementById('completedtaskpop');
 
 // let taskDatas=[];
 let deletedData = []
+let reverted = [];
 let completeddata = [];
+let comtask = {};
 
 
 
@@ -54,15 +54,7 @@ const completedtaskid = document.getElementById('completedtaskcontent');
 const trashcontent = document.querySelector('#trashcontent');
 let trashnav = document.querySelector('#trashnav');
 
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-
-    
-        
-
-    taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
+taskDatas = JSON.parse(localStorage.getItem("tasklist")) || [];
     if(localStorage.getItem("tasklist")){
         taskDatas.map((data)=>{
             addTask(data); 
@@ -74,12 +66,20 @@ document.addEventListener('DOMContentLoaded', function() {
     completeddata = JSON.parse(localStorage.getItem("completedtask")) || [];
 
     if(localStorage.getItem("completedtask")){
-        completeddata.map((comtasks) => {
-            addcompletedTask(comtasks);
-            countTask(comtasks);
+        completeddata.map((comtask) => {
+            addcompletedTask(comtask);
+            countTask();
            
         })
     }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    
+        
+
+    
 
     checkcounfig()
 
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     let closeupdatebtn = document.querySelector('#closeupdatebtn');
-    closeupdatebtn.addEventListener('click',e=>{
+        closeupdatebtn.addEventListener('click',e=>{
         updatelist.classList.remove('navbar_active');
     })
 
@@ -218,6 +218,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (event.target === trashnav){
         addcontent(trashnav,completednav,tasktab,trashcontent,taskContent,completedtaskid);
         localStorage.setItem('storednav','trashnav');
+    }else if(event.target === completednav){
+        addcontent(completednav,trashnav,tasktab,completedtaskid,trashcontent,taskContent);
+        localStorage.setItem('storednav','completednav');
+    }else if(event.target === tasktab){
+        addcontent(tasktab,completednav,trashnav,taskContent,completedtaskid,trashcontent);
+        localStorage.setItem('storednav','tasktab');
     }
    
  }
@@ -229,16 +235,18 @@ document.addEventListener('DOMContentLoaded', function() {
         taskContent.classList.add('active-content');
     }else if ( localStorage.getItem('storednav') === 'trashnav') {
         addcontent(trashnav,completednav,tasktab,trashcontent,taskContent,completedtaskid);
+    }else if (localStorage.getItem('storednav') === 'completednav'){
+        addcontent(completednav,trashnav,tasktab,completedtaskid,trashcontent,taskContent);
+    }else if (localStorage.getItem('storednav') === 'tasktab'){
+        addcontent(tasktab,completednav,trashnav,taskContent,completedtaskid,trashcontent);
     }
     
 }
    
     function addcontent(tagcontent,otheercontent,secotheercontent,tagnewele,existingeleone,existingeletwo){
-
         tagcontent.classList.add('active__tab');
         otheercontent.classList.remove('active__tab');
         secotheercontent.classList.remove('active__tab');
-
         tagnewele.classList.add('active-content')
         existingeleone.classList.remove('active-content')
         existingeletwo.classList.remove('active-content')
@@ -247,41 +255,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     
-   
-
-    
 
 
+// function removecompTask(e){
 
-function removeTask(event){
-    
-    let targetEle = event.currentTarget
-    let ParentEle = targetEle.parentElement.parentElement
-    uniTaskId = targetEle.closest("li").id;
+//     let deltarget = e.target;
+//     uniTaskId = deltarget.closest("li").id;
+//     if(targetEle.classList.contains("deletedItem")){
+//         sendDatas(deletedData,"deletedlist",deltarget,completeddata,"completedtask");
+//         document.getElementById(uniTaskId).remove();
+//         countTask()
+//     }
 
-    if(targetEle.classList.contains("deletedItem") || ParentEle.classList.contains("deletedItem")){
-
-        sendDatas(deletedData,"deletedlist",targetEle,taskDatas,"tasklist");
-        document.getElementById(uniTaskId).remove();
-        countTask()
-
-    }
-
-}
-
-
-
-function removecompTask(e){
-
-    let deltarget = e.target;
-    uniTaskId = deltarget.closest("li").id;
-    if(targetEle.classList.contains("deletedItem")){
-        sendDatas(deletedData,"deletedlist",deltarget,completeddata,"completedtask");
-        document.getElementById(uniTaskId).remove();
-        countTask()
-    }
-
-}
+// }
 
 
 
@@ -290,9 +276,9 @@ function addTask(data) {
 
     console.log(data.taskInput)
     const taskList = document.querySelector('#tasklistwrapper')
-
     const taskcard = document.createElement("li");
     taskcard.setAttribute("id",data.id);
+
 
     const TaskMarkup = `<div class="hero__appwrapper__tasklistwrapper__card">
                                 <a onclick="editTask(event)" ${!data.isCompleted?"contentditable":""} class="hero__appwrapper__tasklistwrapper__taskcard" id="taskcards" href="#">${data.taskInput}</a>
@@ -381,25 +367,43 @@ function updatetask(itemid){
 }
 
 
-
 function completetask(event){
 
     let comTarget = event.currentTarget;
+
+    uniTaskId = comTarget.closest("li").id;
+
     let comParent = comTarget.parentElement
 
     let task = comParent.previousElementSibling;
 
     data.isCompleted = !data.isCompleted;
 
+
     if(data.isCompleted){
+
         task.removeAttribute("contentditable");
         comTarget.setAttribute("checked","")
-        sendDatas(completeddata,"completedtask",comTarget,taskDatas,"tasklist")
-        console.log(completeddata);
+
+        let data = taskDatas.find((data) => data.id == parseInt(uniTaskId));
+        
+        let completedTime = new Date();
+        comtask.id = data.id,
+        comtask.taskInput = data.taskInput,
+        comtask.DescripInput = data.DescripInput,
+        comtask.isCompleted =  true,
+        comtask.SubTimeandDate=completedTime,
+    
+        addcompletedTask(comtask);
+        
+        sendDatas(completeddata,"completedtask",comTarget,taskDatas,"tasklist",comtask);
+
         task.classList.add('completedtaskcss');
+
         comTarget.className = 'lni lni-checkmark-circle';
-        addcompletedTask(completeddata);
+
         countTask()
+
         window.location.reload();
         
     }
@@ -408,22 +412,22 @@ function completetask(event){
 
 
 
-function addcompletedTask(completeddata){
+function addcompletedTask(comdata){
 
     let completedList = document.querySelector('#completedlistwrapper');
     let completedcard = document.createElement("li");
     
-    if(completeddata){
-        completeddata.map((comtasks) => {
+    if(comdata){
 
-            completedcard.setAttribute("id",comtasks.id);
+            completedcard.setAttribute("id",comdata.id);
+
         
             const completeMarkup = `
                 <div class="hero__appwrapper__tasklistwrapper__card">
-                <a  ${!data.isCompleted?"contentditable":""}  class="hero__appwrapper__tasklistwrapper__taskcard" id="comtaskcard" href="#">${comtasks.taskInput}</a>
+                <a   class="hero__appwrapper__tasklistwrapper__taskcard" id="comtaskcard" href="#">${comdata.taskInput}</a>
 
                 <div class="hero__appwrapper__tasklistwrapper__icons">
-                    <i class="fas fa-exchange-alt" onclick="reverttask(event)" data-id="${comtasks.id}" ></i>
+                    <i class="fas fa-exchange-alt" onclick="reverttask(event)" completed-id="${comdata.id}"></i>
                     <i class="lni lni-trash deletedItem" id"deletecomptask" onclick="removecompTask(event)"></i>
                 </div>
 
@@ -432,8 +436,11 @@ function addcompletedTask(completeddata){
             completedcard.innerHTML = completeMarkup;
             completedList.appendChild(completedcard);
 
+            
+            
 
-        })
+
+       
     }
     
      
@@ -471,36 +478,10 @@ function openAndClose(event) {
 
 
 
-function sendDatas(filestore,filestring,tarrgetel,dataorigin,dataoriginstring){
-
-    uniTaskId = tarrgetel.closest("li").id;
-
-    filestore.push(dataorigin.filter((data) => data.id === parseInt(uniTaskId)))
-        localStorage.setItem(filestring,JSON.stringify(filestore));
-
-        dataorigin = taskDatas.filter((data) => data.id !== parseInt(uniTaskId));
-        localStorage.setItem(dataoriginstring,JSON.stringify(dataorigin));
-  // document.getElementById(uniTaskId).remove();
-
-}
-
-function compDatas(filestore,filestring,tarrgetel,dataorigin,dataoriginstring){
-
-    uniTaskId = tarrgetel.closest("li").id;
-
-    filestore.push(dataorigin.filter((comtasks) => comtasks.id === parseInt(uniTaskId)))
-        localStorage.setItem(filestring,JSON.stringify(filestore));
-
-        dataorigin = taskDatas.filter((comtasks) => comtasks.id !== parseInt(uniTaskId));
-        localStorage.setItem(dataoriginstring,JSON.stringify(dataorigin));
-  // document.getElementById(uniTaskId).remove();
-
-}
 
 
 
 function countTask(){
-
         totaltask.innerHTML = taskDatas.length ;
         completedtaskpop.innerHTML = completeddata.length;
         checkcounfig()
@@ -512,28 +493,72 @@ function countTask(){
 
 function checkcounfig(){
 
-    if(totaltask.innerHTML == 0){
+    if(totaltask.innerHTML == 0 ){
         totaltask.classList.add('deactivate');
-    }else if(completedtaskpop.innerHTML == 0 ){
+    }
+     if(completedtaskpop.innerHTML == 0 ){
         completedtaskpop.classList.add('deactivate');
-    }else if (totaltask.innerHTML >= 1 && completedtaskpop.innerHTML >= 1 ){
+    }
+    
+     if (totaltask.innerHTML >= 1 && completedtaskpop.innerHTML >= 1 ){
         totaltask.classList.remove('deactivate');
         completedtaskpop.classList.remove('deactivate');
     }
    
-
 }
 
 
-function reverttask(e){
-    let completedtargetid = e.target;
 
-    console.log(completedtargetid);
+function reverttask(event){
 
-    e.target.setAttribute("checked","")
-    compDatas(taskDatas,"tasklist",completedtargetid,completeddata,"completedtask");
-    addTask(data)
+    let completedtarget = event.currentTarget;
+    revertedid = completedtarget.getAttribute("completed-id")
+   
+    const revertdata = completeddata.find((comdata) => comdata.id === parseInt(revertedid) );
+    console.log(revertdata);
+    sendDatas(taskDatas,"tasklist",completedtarget,completeddata,"completedtask",revertdata);
     countTask()
+    window.location.reload();
 
+    
+}
+
+// function removecompTask(event){
+//     let remocom = event.target
+//     sendDatas(deletedData,"deletedlist",remocom,completeddata,"completedtask");
+// }
+
+function removeTask(event){
+    
+    let targetEle = event.currentTarget
+    let ParentEle = targetEle.parentElement.parentElement
+    uniTaskId = targetEle.closest("li").id;
+
+    if(targetEle.classList.contains("deletedItem") || ParentEle.classList.contains("deletedItem")){
+        sendDatas(deletedData,"deletedlist",targetEle,taskDatas,"tasklist");
+        document.getElementById(uniTaskId).remove();
+        countTask()
+
+    }
 
 }
+
+
+
+
+function sendDatas(filestore,filestring,tarrgetel,dataorigin,dataoriginstring,newdata){
+
+    uniTaskId = tarrgetel.closest("li").id;
+
+    filestore.push(newdata);
+    localStorage.setItem(filestring,JSON.stringify(filestore));
+
+    dataorigin = dataorigin.filter((data) => data.id !== parseInt(uniTaskId));
+    localStorage.setItem(dataoriginstring,JSON.stringify(dataorigin));
+
+}
+
+
+
+
+
