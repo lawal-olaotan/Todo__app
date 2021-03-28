@@ -835,8 +835,11 @@ body {
 }
 
 .footer {
-  position: -webkit-sticky;
-  position: sticky;
+  position: fixed;
+  bottom: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   background: black;
   color: white;
   display: -webkit-box;
