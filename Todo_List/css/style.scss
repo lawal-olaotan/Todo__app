@@ -156,6 +156,7 @@
                             position: absolute;
                             margin-right: 0;
                             top: 8px;
+                            left: -.8pc;
                             border-radius: 100%;
                             -webkit-border-radius: 100%;
                             -moz-border-radius: 100%;
@@ -177,6 +178,7 @@
                         @include laptop {
                             color: #000;
                             font-size: 1rem;
+                            padding: .6rem 1.2rem;
                         }
 
                         &:hover {

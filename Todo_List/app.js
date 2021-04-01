@@ -1,5 +1,6 @@
 
 
+
 const clearbtn = document.querySelector('#clearbtn');
 const taskForm = document.querySelector("#taskform");
 const deleteTask = document.querySelector(".deletedItem");
@@ -479,6 +480,10 @@ function trashTask(deleted){
                 trashList.appendChild(trashcard);
        
     }
+
+   
+    // window.location.reload();
+
       
 
 }
@@ -578,13 +583,13 @@ function removeTask(event){
     let targetEle = event.currentTarget
     let ParentEle = targetEle.parentElement.parentElement
     uniTaskId = targetEle.closest("li").id;
-
     if(targetEle.classList.contains("deletedItem") || ParentEle.classList.contains("deletedItem")){
 
         sendDatas(deletedData,"deletedlist",targetEle,taskDatas,"tasklist",deletedata);
         document.getElementById(uniTaskId).remove();
         trashTask(deletedata)
         countTask()
+        window.location.reload();
 
     }
 }
