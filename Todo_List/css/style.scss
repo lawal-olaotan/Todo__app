@@ -1,5 +1,10 @@
             // navbar
             @import "./media-queries";
+
+            html {
+                scroll-behavior: smooth;
+              }
+
             * {
                 padding: 0;
                 margin: 0;
@@ -210,6 +215,14 @@
                 animation: fadeEffect 1s; 
                 overflow: scroll;
                 height: 100%;
+
+                @include mobile{
+                    min-height: fit-content;
+                    max-height: 560px;
+                }
+                @include tablet{
+                    max-height: 100%;
+                }
                 
                 &__appcontainer {
                     margin-top: 1rem;
