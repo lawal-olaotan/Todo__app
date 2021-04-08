@@ -330,7 +330,7 @@ body {
     min-height: -webkit-fit-content;
     min-height: -moz-fit-content;
     min-height: fit-content;
-    max-height: 560px;
+    max-height: 550px;
   }
 }
 
