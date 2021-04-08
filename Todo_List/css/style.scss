@@ -232,6 +232,7 @@
                     height: fit-content;
                     border: 1px solid #FF4141;
                     padding: 3%;
+                    overflow:scroll;
                     @include mobile {
                         width: 95%;
                     }
